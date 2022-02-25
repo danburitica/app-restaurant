@@ -19,13 +19,14 @@ const BuyHistory = () => {
   const API_URL = "http://localhost:3001/api/info?key=history";
 
   const [history, setHistory] = useState([]);
+  const [fetchError, setFetchError] = useState({});
 
   useEffect(async () => {
     try {
       const { data: history } = await axios.get(API_URL);
       setHistory(history);
     } catch (error) {
-      console.error(error);
+      setFetchError(error);
     }
   }, []);
 
@@ -57,24 +58,32 @@ const BuyHistory = () => {
             Historial de Compras
           </Typography>
           <Box sx={{ mt: 3 }}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Fecha</TableCell>
-                    <TableCell>Ingredientes</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {history.map((history) => (
-                    <TableRow hover key={history.id}>
-                      <TableCell>{history.date}</TableCell>
-                      <TableCell>{getIngredients(history.buyIngredients)}</TableCell>
+            {fetchError.message ? (
+              <Typography m={5}>
+                ¡Lo sentimos! No pudimos cargar el Historial de Compras :(
+              </Typography>
+            ) : !history.length ? (
+              <Typography m={5}>El Historial de Compras está vacío :)</Typography>
+            ) : (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Fecha</TableCell>
+                      <TableCell>Ingredientes</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {history.map((history) => (
+                      <TableRow hover key={history.id}>
+                        <TableCell>{history.date}</TableCell>
+                        <TableCell>{getIngredients(history.buyIngredients)}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
           </Box>
         </Container>
       </Box>

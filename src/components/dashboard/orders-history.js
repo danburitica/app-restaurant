@@ -1,4 +1,3 @@
-import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Box,
   Button,
@@ -11,54 +10,46 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { SeverityPill } from "../severity-pill";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 export const OrdersHistory = (props) => {
-  const API_URL = "http://localhost:3002/api/info?key=history";
-
-  const [orders, setOrders] = useState([]);
-
-  useEffect(async () => {
-    try {
-      const { data: orders } = await axios.get(API_URL);
-      setOrders(orders.slice(0, 5));
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
   return (
     <Card {...props}>
       <CardHeader title="Historial de Pedidos" />
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Plato</TableCell>
-              <TableCell>Fecha</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow hover key={order.id}>
-                <TableCell>{order.title}</TableCell>
-                <TableCell>{order.date}</TableCell>
-                <TableCell>
-                  <SeverityPill color={order.status === "delivered" ? "success" : "warning"}>
-                    {order.status}
-                  </SeverityPill>
-                </TableCell>
+      {props.fetcherror?.message ? (
+        <Typography m={5}>¡Lo sentimos! No pudimos cargar el Historial de Pedidos :(</Typography>
+      ) : !props.ordershistory.length ? (
+        <Typography m={5}>El Historial de Pedidos está vacío :)</Typography>
+      ) : (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Plato</TableCell>
+                <TableCell>Fecha</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {props.ordershistory?.map((order) => (
+                <TableRow hover key={order.id}>
+                  <TableCell>{order.title}</TableCell>
+                  <TableCell>{order.date}</TableCell>
+                  <TableCell>
+                    <SeverityPill color={order.status === "delivered" ? "success" : "warning"}>
+                      {order.status}
+                    </SeverityPill>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
       <Box
         sx={{

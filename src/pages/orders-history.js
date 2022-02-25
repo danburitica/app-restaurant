@@ -20,13 +20,14 @@ const OrdersHistory = () => {
   const API_URL = "http://localhost:3002/api/info?key=history";
 
   const [orders, setOrders] = useState([]);
+  const [fetchError, setFetchError] = useState({});
 
   useEffect(async () => {
     try {
       const { data: orders } = await axios.get(API_URL);
       setOrders(orders);
     } catch (error) {
-      console.error(error);
+      setFetchError(error);
     }
   }, []);
 
@@ -47,30 +48,40 @@ const OrdersHistory = () => {
             Historial de Pedidos
           </Typography>
           <Box sx={{ mt: 3 }}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Plato</TableCell>
-                    <TableCell>Fecha</TableCell>
-                    <TableCell>Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {orders.map((order) => (
-                    <TableRow hover key={order.id}>
-                      <TableCell>{order.title}</TableCell>
-                      <TableCell>{order.date}</TableCell>
-                      <TableCell>
-                        <SeverityPill color={order.status === "delivered" ? "success" : "warning"}>
-                          {order.status}
-                        </SeverityPill>
-                      </TableCell>
+            {fetchError.message ? (
+              <Typography m={5}>
+                ¡Lo sentimos! No pudimos cargar el Historial de Pedidos :(
+              </Typography>
+            ) : !orders.length ? (
+              <Typography m={5}>El Historial de Pedidos está vacío :)</Typography>
+            ) : (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Plato</TableCell>
+                      <TableCell>Fecha</TableCell>
+                      <TableCell>Status</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {orders.map((order) => (
+                      <TableRow hover key={order.id}>
+                        <TableCell>{order.title}</TableCell>
+                        <TableCell>{order.date}</TableCell>
+                        <TableCell>
+                          <SeverityPill
+                            color={order.status === "delivered" ? "success" : "warning"}
+                          >
+                            {order.status}
+                          </SeverityPill>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
           </Box>
         </Container>
       </Box>

@@ -5,18 +5,19 @@ import { useTheme } from "@emotion/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Products = () => {
+const Recipes = () => {
   const theme = useTheme();
   const API_URL = "http://localhost:3002/api/info?key=recipes";
 
   const [recipes, setRecipes] = useState([]);
+  const [fetchError, setFetchError] = useState({});
 
   useEffect(async () => {
     try {
       const { data: recipes } = await axios.get(API_URL);
       setRecipes(recipes);
     } catch (error) {
-      console.error(error);
+      setFetchError(error);
     }
   }, []);
 
@@ -48,36 +49,54 @@ const Products = () => {
             Recetas Disponibles
           </Typography>
           <Box sx={{ pt: 3 }}>
-            <Grid container spacing={3}>
-              {recipes.map((recipe) => (
-                <Grid item key={recipe.id} lg={4} md={6} xs={12}>
-                  <Card
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                    }}
-                  >
-                    <CardContent>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          pb: 3,
-                        }}
-                      ></Box>
-                      <Typography align="center" color="textPrimary" gutterBottom variant="h5">
-                        {recipe.title}
-                      </Typography>
-                      <Typography align="center" color="textPrimary" gutterBottom>
-                        {getIngredients(recipe.ingredients)}
-                      </Typography>
-                    </CardContent>
-                    <Box sx={{ flexGrow: 1 }} />
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+            {fetchError.message ? (
+              <Typography m={5}>¡Lo sentimos! No pudimos cargar las Recetas :(</Typography>
+            ) : (
+              <Grid container spacing={3}>
+                {recipes.map((recipe) => (
+                  <Grid item key={recipe.id} lg={4} md={6} xs={12}>
+                    <Card
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "100%",
+                      }}
+                    >
+                      <CardContent>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            pb: 3,
+                          }}
+                        ></Box>
+                        <Typography
+                          fontWeight="bold"
+                          align="center"
+                          color="textPrimary"
+                          gutterBottom
+                          variant="h5"
+                        >
+                          {recipe.title}
+                        </Typography>
+                        <Typography
+                          fontWeight="bold"
+                          color="textPrimary"
+                          gutterBottom
+                          variant="subtitle"
+                        >
+                          Ingredientes:
+                        </Typography>
+                        <Typography mt={3} color="textPrimary" gutterBottom>
+                          {getIngredients(recipe.ingredients)}
+                        </Typography>
+                      </CardContent>
+                      <Box sx={{ flexGrow: 1 }} />
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
           </Box>
           <Box
             sx={{
@@ -92,6 +111,6 @@ const Products = () => {
   );
 };
 
-Products.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Recipes.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Products;
+export default Recipes;
