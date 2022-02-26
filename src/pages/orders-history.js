@@ -17,7 +17,8 @@ import { useEffect, useState } from "react";
 import { SeverityPill } from "src/components/severity-pill";
 
 const OrdersHistory = () => {
-  const NEXT_PUBLIC_VERCEL_ORDER_HISTORY = "http://localhost:3002/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_ORDER_HISTORY =
+    process.env.NEXT_PUBLIC_VERCEL_ORDER_HISTORY || "http://localhost:3002/api/info?key=history";
 
   const [orders, setOrders] = useState([]);
   const [fetchError, setFetchError] = useState({});

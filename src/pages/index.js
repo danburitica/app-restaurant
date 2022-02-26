@@ -10,12 +10,14 @@ import axios from "axios";
 
 const Dashboard = () => {
   // Stock
-  const NEXT_PUBLIC_VERCEL_STOCK = "http://localhost:3001/api/info?key=stock";
+  const NEXT_PUBLIC_VERCEL_STOCK =
+    process.env.NEXT_PUBLIC_VERCEL_STOCK || "http://localhost:3001/api/info?key=stock";
   const [stock, setStock] = useState([]);
   const [fetchErrorStock, setFetchErrorStock] = useState({});
 
   // Orders
-  const NEXT_PUBLIC_VERCEL_ORDER = "http://localhost:3002/api/kitchen";
+  const NEXT_PUBLIC_VERCEL_ORDER =
+    process.env.NEXT_PUBLIC_VERCEL_ORDER || "http://localhost:3002/api/kitchen";
   const [orders, setOrders] = useState([]);
   const [fetchErrorOrder, setFetchErrorOrder] = useState({});
   const [disabled, setDisabled] = useState(false);
@@ -41,12 +43,14 @@ const Dashboard = () => {
   };
 
   // Orders History
-  const NEXT_PUBLIC_VERCEL_ORDER_HISTORY = "http://localhost:3002/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_ORDER_HISTORY =
+    process.env.NEXT_PUBLIC_VERCEL_ORDER_HISTORY || "http://localhost:3002/api/info?key=history";
   const [ordersHistory, setOrdersHistory] = useState([]);
   const [fetchErrorOrdHistory, setFetchErrorOrdHistory] = useState({});
 
   // Buy History
-  const NEXT_PUBLIC_VERCEL_BUY_HISTORY = "http://localhost:3001/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_BUY_HISTORY =
+    process.env.NEXT_PUBLIC_VERCEL_BUY_HISTORY || "http://localhost:3001/api/info?key=history";
   const [buyHistory, setBuyHistory] = useState([]);
   const [fetchErrorBuyHistory, setFetchErrorBuyHistory] = useState({});
 

@@ -7,7 +7,8 @@ import axios from "axios";
 
 const Recipes = () => {
   const theme = useTheme();
-  const NEXT_PUBLIC_VERCEL_RECIPES = "http://localhost:3002/api/info?key=recipes";
+  const NEXT_PUBLIC_VERCEL_RECIPES =
+    process.env.NEXT_PUBLIC_VERCEL_RECIPES || "http://localhost:3002/api/info?key=recipes";
 
   const [recipes, setRecipes] = useState([]);
   const [fetchError, setFetchError] = useState({});

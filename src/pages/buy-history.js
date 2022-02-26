@@ -16,7 +16,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const BuyHistory = () => {
-  const NEXT_PUBLIC_VERCEL_BUY_HISTORY = "http://localhost:3001/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_BUY_HISTORY =
+    process.env.NEXT_PUBLIC_VERCEL_BUY_HISTORY || "http://localhost:3001/api/info?key=history";
 
   const [history, setHistory] = useState([]);
   const [fetchError, setFetchError] = useState({});

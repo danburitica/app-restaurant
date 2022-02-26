@@ -10,8 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 export const BuyHistory = (props) => {
   const getIngredients = (buyIngredients) => {
