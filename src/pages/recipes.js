@@ -7,14 +7,14 @@ import axios from "axios";
 
 const Recipes = () => {
   const theme = useTheme();
-  const API_URL = "http://localhost:3002/api/info?key=recipes";
+  const NEXT_PUBLIC_VERCEL_RECIPES = "http://localhost:3002/api/info?key=recipes";
 
   const [recipes, setRecipes] = useState([]);
   const [fetchError, setFetchError] = useState({});
 
   useEffect(async () => {
     try {
-      const { data: recipes } = await axios.get(API_URL);
+      const { data: recipes } = await axios.get(NEXT_PUBLIC_VERCEL_RECIPES);
       setRecipes(recipes);
     } catch (error) {
       setFetchError(error);

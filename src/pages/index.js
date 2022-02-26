@@ -10,12 +10,12 @@ import axios from "axios";
 
 const Dashboard = () => {
   // Stock
-  const API_URL_STOCK = "http://localhost:3001/api/info?key=stock";
+  const NEXT_PUBLIC_VERCEL_STOCK = "http://localhost:3001/api/info?key=stock";
   const [stock, setStock] = useState([]);
   const [fetchErrorStock, setFetchErrorStock] = useState({});
 
   // Orders
-  const API_URL_ORDER = "http://localhost:3002/api/kitchen";
+  const NEXT_PUBLIC_VERCEL_ORDER = "http://localhost:3002/api/kitchen";
   const [orders, setOrders] = useState([]);
   const [fetchErrorOrder, setFetchErrorOrder] = useState({});
   const [disabled, setDisabled] = useState(false);
@@ -32,7 +32,7 @@ const Dashboard = () => {
       },
     ]);
     try {
-      const { data: order } = await axios.get(API_URL_ORDER);
+      const { data: order } = await axios.get(NEXT_PUBLIC_VERCEL_ORDER);
       setOrders((orders) => [...orders.slice(0, -1), order]);
       setDisabled(false);
     } catch (error) {
@@ -41,12 +41,12 @@ const Dashboard = () => {
   };
 
   // Orders History
-  const API_URL_ORDER_HISTORY = "http://localhost:3002/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_ORDER_HISTORY = "http://localhost:3002/api/info?key=history";
   const [ordersHistory, setOrdersHistory] = useState([]);
   const [fetchErrorOrdHistory, setFetchErrorOrdHistory] = useState({});
 
   // Buy History
-  const API_URL_BUY_HISTORY = "http://localhost:3001/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_BUY_HISTORY = "http://localhost:3001/api/info?key=history";
   const [buyHistory, setBuyHistory] = useState([]);
   const [fetchErrorBuyHistory, setFetchErrorBuyHistory] = useState({});
 
@@ -54,19 +54,19 @@ const Dashboard = () => {
     if (!orders.length || orders[orders.length - 1]?.status === "delivered") {
       resetErrors();
       try {
-        const { data: stock } = await axios.get(API_URL_STOCK);
+        const { data: stock } = await axios.get(NEXT_PUBLIC_VERCEL_STOCK);
         setStock(Object.entries(stock));
       } catch (error) {
         setFetchErrorStock(error);
       }
       try {
-        const { data: orders } = await axios.get(API_URL_ORDER_HISTORY);
+        const { data: orders } = await axios.get(NEXT_PUBLIC_VERCEL_ORDER_HISTORY);
         setOrdersHistory(orders.slice(-5));
       } catch (error) {
         setFetchErrorOrdHistory(error);
       }
       try {
-        const { data: history } = await axios.get(API_URL_BUY_HISTORY);
+        const { data: history } = await axios.get(NEXT_PUBLIC_VERCEL_BUY_HISTORY);
         setBuyHistory(history.slice(-5));
       } catch (error) {
         setFetchErrorBuyHistory(error);

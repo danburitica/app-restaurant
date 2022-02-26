@@ -17,14 +17,14 @@ import { useEffect, useState } from "react";
 import { SeverityPill } from "src/components/severity-pill";
 
 const OrdersHistory = () => {
-  const API_URL = "http://localhost:3002/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_ORDER_HISTORY = "http://localhost:3002/api/info?key=history";
 
   const [orders, setOrders] = useState([]);
   const [fetchError, setFetchError] = useState({});
 
   useEffect(async () => {
     try {
-      const { data: orders } = await axios.get(API_URL);
+      const { data: orders } = await axios.get(NEXT_PUBLIC_VERCEL_ORDER_HISTORY);
       setOrders(orders);
     } catch (error) {
       setFetchError(error);

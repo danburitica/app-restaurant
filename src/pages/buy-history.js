@@ -16,14 +16,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const BuyHistory = () => {
-  const API_URL = "http://localhost:3001/api/info?key=history";
+  const NEXT_PUBLIC_VERCEL_BUY_HISTORY = "http://localhost:3001/api/info?key=history";
 
   const [history, setHistory] = useState([]);
   const [fetchError, setFetchError] = useState({});
 
   useEffect(async () => {
     try {
-      const { data: history } = await axios.get(API_URL);
+      const { data: history } = await axios.get(NEXT_PUBLIC_VERCEL_BUY_HISTORY);
       setHistory(history);
     } catch (error) {
       setFetchError(error);
