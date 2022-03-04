@@ -15,9 +15,9 @@ export const BuyHistory = (props) => {
   const getIngredients = (buyIngredients) => {
     let stringIngredients = "";
 
-    for (const ingredient in buyIngredients) {
-      stringIngredients += `${ingredient[0].toUpperCase() + ingredient.slice(1)}: ${
-        buyIngredients[ingredient]
+    for (const ingredient of buyIngredients) {
+      stringIngredients += `${ingredient.name[0].toUpperCase() + ingredient.name.slice(1)}: ${
+        ingredient.quantity
       }, `;
     }
     return stringIngredients.slice(0, -2);
@@ -33,12 +33,9 @@ export const BuyHistory = (props) => {
         ) : !props.buyhistory.length ? (
           <Typography m={5}>El Historial de Compras está vacío :)</Typography>
         ) : (
-          props.buyhistory?.map((history) => (
-            <ListItem key={history.id}>
-              <ListItemText
-                primary={getIngredients(history.buyIngredients)}
-                secondary={history.date}
-              />
+          props.buyhistory?.map(({ _id, ingredients, date }) => (
+            <ListItem key={_id}>
+              <ListItemText primary={getIngredients(ingredients)} secondary={date} />
             </ListItem>
           ))
         )}

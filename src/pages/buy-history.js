@@ -34,9 +34,9 @@ const BuyHistory = () => {
   const getIngredients = (buyIngredients) => {
     let stringIngredients = "";
 
-    for (const ingredient in buyIngredients) {
-      stringIngredients += `${ingredient[0].toUpperCase() + ingredient.slice(1)}: ${
-        buyIngredients[ingredient]
+    for (const ingredient of buyIngredients) {
+      stringIngredients += `${ingredient.name[0].toUpperCase() + ingredient.name.slice(1)}: ${
+        ingredient.quantity
       }, `;
     }
     return stringIngredients.slice(0, -2);
@@ -75,10 +75,10 @@ const BuyHistory = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {history.map((history) => (
-                      <TableRow hover key={history.id}>
-                        <TableCell>{history.date}</TableCell>
-                        <TableCell>{getIngredients(history.buyIngredients)}</TableCell>
+                    {history.map(({ _id, ingredients, date }) => (
+                      <TableRow hover key={_id}>
+                        <TableCell>{date}</TableCell>
+                        <TableCell>{getIngredients(ingredients)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

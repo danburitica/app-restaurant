@@ -25,9 +25,9 @@ const Recipes = () => {
   const getIngredients = (buyIngredients) => {
     let stringIngredients = "";
 
-    for (const ingredient in buyIngredients) {
-      stringIngredients += `${ingredient[0].toUpperCase() + ingredient.slice(1)}: ${
-        buyIngredients[ingredient]
+    for (const ingredient of buyIngredients) {
+      stringIngredients += `${ingredient.name[0].toUpperCase() + ingredient.name.slice(1)}: ${
+        ingredient.quantity
       }, `;
     }
     return stringIngredients.slice(0, -2);
@@ -54,8 +54,8 @@ const Recipes = () => {
               <Typography m={5}>¡Lo sentimos! No pudimos cargar las Recetas :(</Typography>
             ) : (
               <Grid container spacing={3}>
-                {recipes.map((recipe) => (
-                  <Grid item key={recipe.id} lg={4} md={6} xs={12}>
+                {recipes.map(({ _id, title, ingredients }) => (
+                  <Grid item key={_id} lg={4} md={6} xs={12}>
                     <Card
                       sx={{
                         display: "flex",
@@ -78,7 +78,7 @@ const Recipes = () => {
                           gutterBottom
                           variant="h5"
                         >
-                          {recipe.title}
+                          {title}
                         </Typography>
                         <Typography
                           fontWeight="bold"
@@ -89,7 +89,7 @@ const Recipes = () => {
                           Ingredientes:
                         </Typography>
                         <Typography mt={3} color="textPrimary" gutterBottom>
-                          {getIngredients(recipe.ingredients)}
+                          {getIngredients(ingredients)}
                         </Typography>
                       </CardContent>
                       <Box sx={{ flexGrow: 1 }} />

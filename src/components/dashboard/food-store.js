@@ -26,13 +26,9 @@ export const FoodStore = (props) => {
                 ¡Lo sentimos! No pudimos cargar la Bodega de Alimentos :(
               </Typography>
             ) : (
-              props.stock?.map((ingredient) => (
-                <ListItem key={ingredient[0]}>
-                  <ListItemText
-                    primary={`${ingredient[0][0].toUpperCase() + ingredient[0].slice(1)}: ${
-                      ingredient[1]
-                    }`}
-                  />
+              props.stock?.map(({ name, quantity, _id }) => (
+                <ListItem key={_id}>
+                  <ListItemText primary={`${name[0].toUpperCase() + name.slice(1)}: ${quantity}`} />
                 </ListItem>
               ))
             )}

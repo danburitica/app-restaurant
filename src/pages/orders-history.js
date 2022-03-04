@@ -66,15 +66,13 @@ const OrdersHistory = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {orders.map((order) => (
-                      <TableRow hover key={order.id}>
-                        <TableCell>{order.title}</TableCell>
-                        <TableCell>{order.date}</TableCell>
+                    {orders.map(({ _id, title, date, status }) => (
+                      <TableRow hover key={_id}>
+                        <TableCell>{title}</TableCell>
+                        <TableCell>{date}</TableCell>
                         <TableCell>
-                          <SeverityPill
-                            color={order.status === "delivered" ? "success" : "warning"}
-                          >
-                            {order.status}
+                          <SeverityPill color={status === "delivered" ? "success" : "warning"}>
+                            {status}
                           </SeverityPill>
                         </TableCell>
                       </TableRow>

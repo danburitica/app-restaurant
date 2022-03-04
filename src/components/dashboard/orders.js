@@ -61,13 +61,13 @@ export const Orders = (props) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {props.orders?.map((order) => (
-                    <TableRow hover key={order.id}>
-                      <TableCell>{order.title}</TableCell>
-                      <TableCell>{order.date}</TableCell>
+                  {props.orders?.map(({ id, title, date, status }) => (
+                    <TableRow hover key={id}>
+                      <TableCell>{title}</TableCell>
+                      <TableCell>{date}</TableCell>
                       <TableCell>
-                        <SeverityPill color={order.status === "delivered" ? "success" : "warning"}>
-                          {order.status}
+                        <SeverityPill color={status === "delivered" ? "success" : "warning"}>
+                          {status}
                         </SeverityPill>
                       </TableCell>
                     </TableRow>

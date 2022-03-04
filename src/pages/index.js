@@ -59,7 +59,7 @@ const Dashboard = () => {
       resetErrors();
       try {
         const { data: stock } = await axios.get(NEXT_PUBLIC_VERCEL_STOCK);
-        setStock(Object.entries(stock));
+        setStock(stock);
       } catch (error) {
         setFetchErrorStock(error);
       }
